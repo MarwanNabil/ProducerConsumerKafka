@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"offerDisc\": \"93% off on all products.\"\r\n}",
+							"raw": "{\r\n    \"offerDisc\": \"92% off on all products.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -84,6 +84,37 @@
 							"port": "9000",
 							"path": [
 								"offers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Offer By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offerId\": \"643f6ca002b2557973c0bb12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/offer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"offer"
 							]
 						}
 					},
