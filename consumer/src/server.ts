@@ -40,33 +40,31 @@ const runServer = async () => {
     const obj = await new KafkaFactory("myapp", [KAFKA_BROKER_URL]);
 
     await obj.run(KAFKA_TOPIC, async (result: any) => {
-      const baseOffset = result.message.offset;
+      const offerId = result.message.offset;
       const offerData: string = result.message.value.toString();
 
       const operation = offerData[0] === "-" ? "delete" : "add";
 
       if (operation === "delete") {
-        const offerToDeleteOffset = offerData.substring(2);
-        const offer = await OfferModel.findOne({
-          baseOffset: offerToDeleteOffset,
-        });
+        const offerId = offerData.substring(2);
+        const offer = await OfferModel.findById(offerId);
         if (offer) {
           await offer.deleteOne();
-          console.log("Deleted offer with base offset = " + baseOffset + ".");
+          console.log("Deleted offer with id = " + offerId + ".");
         } else {
           console.log(
-            `No offer with the following ${baseOffset} offset to be deleted`
+            `No offer with the following ${offerId} id to be deleted.`
           );
         }
       } else {
         const offerDisc = offerData.substring(2);
         const offer = new OfferModel();
-        offer.baseOffset = baseOffset;
         offer.description = offerDisc;
-        await offer.save();
-        console.log(
-          `Added offer with base offset = ${baseOffset} and offer description ${offerDisc} .`
-        );
+        offer.save().then((offer) => {
+          console.log(
+            `Added offer with offerId = ${offer.id} and offer description ${offerDisc} .`
+          );
+        });
       }
     });
   } catch (err) {

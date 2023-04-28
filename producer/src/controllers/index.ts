@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import { ResponseError } from "../helpers/responseError";
 import express, { Request, Response, NextFunction } from "express";
 import { KAFKA_BROKER_URL } from "../../config";
+import OfferModel from "../helpers/offer";
 
 export const postOffer = async (
   req: Request,
@@ -20,8 +21,12 @@ export const postOffer = async (
     }
 
     const offerDisc = req.body.offerDisc;
+    const nwOffer = new OfferModel(offerDisc);
     const obj = await new KafkaFactory("myapp", [KAFKA_BROKER_URL]);
-    const kafkaDisc = await obj.pushItem("offers", "+ " + offerDisc);
+    const kafkaDisc = await obj.pushItem(
+      "offers",
+      "+ " + nwOffer.getOfferDisc()
+    );
 
     return res
       .status(201)
@@ -47,13 +52,13 @@ export const deleteOffer = async (
         throw error;
       }
 
-      const baseOffset = req.body.baseOffset;
+      const offerId = req.body.offerId;
 
       const obj = new KafkaFactory("myapp", [KAFKA_BROKER_URL]);
-      const kafkaDisc = await obj.pushItem("offers", "- " + baseOffset);
+      await obj.pushItem("offers", "- " + offerId);
 
       return res.status(201).json({
-        message: "your offer has been deleted.",
+        message: "your offer has been proccessed.",
       });
     } catch (err) {
       next(err);

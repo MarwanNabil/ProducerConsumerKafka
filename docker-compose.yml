@@ -22,6 +22,7 @@ services:
       KAFKA_TOPIC: "offers"
       MONGO_URI: "mongodb://mongoDB:27017/offers"
     depends_on:
+      - mongoDB
       - kafka
       - zookeeper
     networks:

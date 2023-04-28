@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"offerDisc\": \"92% off on all products.\"\r\n}",
+							"raw": "{\r\n    \"offerDisc\": \"100% 3id hany\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -38,13 +38,13 @@
 					"response": []
 				},
 				{
-					"name": "Delete Offer via base offset",
+					"name": "Delete Offer Via offerId",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"baseOffset\": 23\r\n}",
+							"raw": "{\r\n    \"offerId\": \"643f6ca002b2557973c0bb12\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

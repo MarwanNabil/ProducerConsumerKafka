@@ -19,7 +19,12 @@ routes.post(
 
 routes.delete(
   "/offer",
-  [body("baseOffset").isDecimal().withMessage("enter a valid base offset.")],
+  [
+    body("offerId")
+      .isString()
+      .isLength({ min: 2, max: 50 })
+      .withMessage("enter a valid offerId."),
+  ],
   deleteOffer
 );
 
