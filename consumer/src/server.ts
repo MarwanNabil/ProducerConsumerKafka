@@ -49,7 +49,9 @@ const runServer = async () => {
         const offerId = offerData.substring(2);
         const offer = await OfferModel.findById(offerId);
         if (offer) {
-          await offer.deleteOne();
+          await offer.deleteOne().catch((err) => {
+            console.log(err);
+          });
           console.log("Deleted offer with id = " + offerId + ".");
         } else {
           console.log(
@@ -60,11 +62,16 @@ const runServer = async () => {
         const offerDisc = offerData.substring(2);
         const offer = new OfferModel();
         offer.description = offerDisc;
-        offer.save().then((offer) => {
-          console.log(
-            `Added offer with offerId = ${offer.id} and offer description ${offerDisc} .`
-          );
-        });
+        offer
+          .save()
+          .then((offer) => {
+            console.log(
+              `Added offer with offerId = ${offer.id} and offer description ${offerDisc} .`
+            );
+          })
+          .then((err) => {
+            console.log(err);
+          });
       }
     });
   } catch (err) {
